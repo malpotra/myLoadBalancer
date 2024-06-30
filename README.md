@@ -28,27 +28,7 @@ Read more about proxy servers [here](https://www.cloudflare.com/learning/cdn/glo
 **Note: The proxy server should be capable of handling multiple requests, encryption, rate limiting and caching so must be having optimal compute power.**
 
 ## Repo Structure
-├───jMeterTestPlansAndResults
-├───servlets
-│   ├───reverse-proxy
-│   │   ├───META-INF
-│   │   └───WEB-INF
-│   │       ├───classes
-│   │       ├───lib
-│   │       └───src
-│   │           ├───exposedPkg
-│   │           └───loadBalancer
-│   ├───server1
-│   │   ├───META-INF
-│   │   └───WEB-INF
-│   │       ├───classes
-│   │       └───src
-│   └───server2
-│       ├───META-INF
-│       └───WEB-INF
-│           ├───classes
-│           └───src
-└───tomcatConfiguration
+![image](https://github.com/malpotra/myLoadBalancer/assets/56645001/d55dbd5d-68cd-4c2f-acd2-43996124b163)
 
 The top level directories and what they contain are listed below
 1. **jMeterTestPlansAndResults**: To test the functionality have added the required .jmx files along with the results screenshots.
