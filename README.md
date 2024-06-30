@@ -26,4 +26,31 @@ Read more about proxy servers [here](https://www.cloudflare.com/learning/cdn/glo
 5. Can be used as an **API gateway** as well.
 
 **Note: The proxy server should be capable of handling multiple requests, encryption, rate limiting and caching so must be having optimal compute power.**
+
 ## Repo Structure
+├───jMeterTestPlansAndResults
+├───servlets
+│   ├───reverse-proxy
+│   │   ├───META-INF
+│   │   └───WEB-INF
+│   │       ├───classes
+│   │       ├───lib
+│   │       └───src
+│   │           ├───exposedPkg
+│   │           └───loadBalancer
+│   ├───server1
+│   │   ├───META-INF
+│   │   └───WEB-INF
+│   │       ├───classes
+│   │       └───src
+│   └───server2
+│       ├───META-INF
+│       └───WEB-INF
+│           ├───classes
+│           └───src
+└───tomcatConfiguration
+
+The top level directories and what they contain are listed below
+1. **jMeterTestPlansAndResults**: To test the functionality have added the required .jmx files along with the results screenshots.
+2. **servlets**: All JSP servlets are in this directory. The three subdirectories are three servlets that will deployed on 3 different tomcats. As the name suggests the proxy servlet (our load balancer) in the sub-directory revers-proxy, server1 and server2 are the application servlets that contain our application logic.
+3. **tomcatConfiguration**: The configuration required at all the running Tomcats. Port details mostly.
