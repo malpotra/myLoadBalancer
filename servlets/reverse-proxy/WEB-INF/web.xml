@@ -5,28 +5,13 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 <servlet>
 	<!-- CONFIGURATION PARAMETERS -->
-	<!--init-param>
-		<param-name>databaseURL</param-name>
-		<param-value>jdbc:mysql://localhost:3306/ebookshop</param-value>
-	</init-param>
-	<init-param>
-		<param-name>user</param-name>
-		<param-value>application</param-value>
-	</init-param>
-	<init-param>
-		<param-name>password</param-name>
-		<param-value>password</param-value>
-	</init-param-->
-	<!--SERVLET MAPPING-->	
-	<!--servlet-name>HelloWorldServlet</servlet-name>
-	<servlet-class>mypkg.HelloServlet</servlet-class-->
+
+	<!--SERVLET MAPPING-->
 	<servlet-name>FrontServlet</servlet-name>
 	<servlet-class>exposedPkg.ExposedServlet</servlet-class>
 </servlet>
 <servlet-mapping>
 	<!--SERVLET URL MAPPING-->
-	<!--servlet-name>HelloWorldServlet</servlet-name>
-	<url-pattern>/sayhello</url-pattern-->
 	<servlet-name>FrontServlet</servlet-name>
 	<!-- The wildcard * maps everything of myProduct to the where i want to go -->
 	<url-pattern>/*</url-pattern>

@@ -22,6 +22,7 @@ public class TestServlet extends HttpServlet {
 	    PrintWriter out = null;
             out = response.getWriter();
             out.println("{");
+            //The difference in the response is just the server number
             out.println("\"serverName\":\"Server 1\"");
             out.println("}");
             out.close();

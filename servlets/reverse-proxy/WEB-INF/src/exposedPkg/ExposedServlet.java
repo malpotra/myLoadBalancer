@@ -35,9 +35,6 @@ public class ExposedServlet extends HttpServlet {
                     requestedResource+= "/";
                 }
             }
-            // if ("reverse-proxy".equalsIgnoreCase(requestedResource)) {
-            //     requestedResource = "";
-            // }
 
 
             LOGGER.info(String.format(
@@ -45,35 +42,9 @@ public class ExposedServlet extends HttpServlet {
             ));
             PrintWriter out = null;
             BufferedOutputStream os = null;
-//          ignore this commented block
-//           response.setContentType(contentType);
-//            if (requestedResource.contains(".svg") == true) {
-//                response.setContentType("image/svg+xml");
-//            } else if (requestedResource.contains(".png")) {
-//                response.setContentType("image/png");
-//            } else if (requestedResource.contains(".jpeg")) {
-//                response.setContentType("image/jpeg");
-//            } else if (requestedResource.contains(".ico")) {
-//                response.setContentType("image/x-icon");
-//            } else
-//            if (requestedResource.contains(".html")){
-//                response.setContentType("text/html;charset=UTF-8");
-//            } else if (requestedResource.contains(".css")){
-//                response.setContentType("text/css;charset=UTF-8");
-//            } else if (requestedResource.contains(".js")){
-//                response.setContentType("text/javascript;charset=UTF-8");
-//            } else if (requestedResource.length() == 0) {
-//                response.setContentType("text/html;charset=UTF-8");
-//            } else if (requestedResource.contains(".") == false){
-//                response.setContentType("application/json;charset=UTF-8");
-//            }
 
             try {
                 Response result = loadBalancer.sendToAvailableServer(requestedResource);
-                //TODO remove this comment
-                //LOGGER.log(Level.INFO,String.format("---- Content Type 1 ---- %s", response.getHeader("Content-Type")));
-                //TODO remove this comment
-                //LOGGER.log(Level.INFO,String.format("---- Content Type 2 ---- %s", response.getHeader("Content-Type")));
 
                 result.getHeaders().forEach((key, value) -> {
                     if (key != null
@@ -83,6 +54,9 @@ public class ExposedServlet extends HttpServlet {
                     }
                 });
                 try {
+                    //important as content such as html,js,css, images must
+                    //be written as raw bytes to the output stream
+                    //for that the this flag is checked
                     if (result.shouldBeByteStream() == true) {
                         os = new BufferedOutputStream(response.getOutputStream());
                         List<Integer> resultSet = result.getStream();
@@ -99,11 +73,7 @@ public class ExposedServlet extends HttpServlet {
                     LOGGER.log(Level.SEVERE, "An error occurred", e);
                     throw new LoadBalancerException(e.toString());
                 } 
-                
-                //TODO remove this comment
-                // LOGGER.log(Level.INFO,String.format("---- Content Type 3 ---- %s", response.getHeader("Content-Type")));
-                // LOGGER.log(Level.INFO,String.format("---- Content Type 4 ---- %s", response.getHeader("Content-Type")));
-                // LOGGER.log(Level.INFO,String.format("---- Content Type 5 ---- %s", response.getCharacterEncoding()));
+
             } catch (LoadBalancerException loadNotForwarded) {
                 response.setContentType("text/html;charset=UTF-8");
                 out = response.getWriter();
@@ -112,7 +82,7 @@ public class ExposedServlet extends HttpServlet {
                 out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
                 out.println("<title>My Loader</title></head>");
                 out.println("<body>");
-                out.println("<p>We are under maintenance <br> We applogise for the inconvenience.</p>");
+                out.println("<p>We are under maintenance <br> We apologize for the inconvenience.</p>");
                 out.close();
             }
 
@@ -125,21 +95,7 @@ public class ExposedServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) 
     throws ServletException, IOException
     {
-        try {
-            LOGGER.info("Inside Exposed Servlet Post Mapping Handler");
-            String requestedURI = request.getRequestURI();
-            String remoteAddress = request.getRemoteAddr();
-            LOGGER.info(String.format(
-                "The user requested the resource %s from the remote address",
-                requestedURI,
-                remoteAddress
-            ));
-            loadBalancer.sendToAvailableServer(requestedURI);
-
-
-        } catch (Exception e) {
-            LOGGER.severe("Error occurred inside Exposed Servlet Post Mapping Handler");
-            LOGGER.severe(e.getMessage());
-        }
+        //Empty for now
+        //
     }
 }
