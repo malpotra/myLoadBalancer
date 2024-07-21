@@ -18,7 +18,7 @@ public class LoadBalancerImplementation implements LoadBalancer {
 
     private static Logger LOGGER = Logger.getLogger(LoadBalancerImplementation.class.getName());
     private static int serverPool = 2;
-    private static volatile int lastUsedID = -1;
+    private static int lastUsedID = -1;
 
     private static List<String> servers = new ArrayList<>();
 
@@ -37,7 +37,7 @@ public class LoadBalancerImplementation implements LoadBalancer {
     /**
      * Simple Round Robin Scheduling
      */
-    private synchronized String serverToBeUsed() {
+    private String serverToBeUsed() {
         lastUsedID = (lastUsedID + 1) % serverPool;
         LOGGER.info(String.format("Server Number %d is used", lastUsedID));
         return servers.get(lastUsedID);
