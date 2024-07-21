@@ -42,21 +42,23 @@ The top level directories and what they contain are listed below
 ## Starting and using the project
 **Windows machine only**
 1. Prepare all the tomcat servers (i have taken three feel free to add as many as you like provided you have also gone through the code)
+   
    ![image](https://github.com/user-attachments/assets/21090d43-10c0-4abe-b754-37f10a4ed7b8)
+   
    We will not be changing any other configuration or file in the server, all properties will be managed through a script provided in the project.
    **Ensure all the directory names are exactly same**
-2. The **revere-proxy** is our load balancer server, **server1** and **server2** are the application servers.
-3. Naivigate to the directory **/setupScripts** it contains all the batch scripts that will help us in managing our code easily. **All scripts must be excuted from this directory.**
-4. First execute **replace_server_properties.bat** this will replace the server properties for all the tomcats that are required. It will ask for 2 user inputs
+3. The **revere-proxy** is our load balancer server, **server1** and **server2** are the application servers.
+4. Naivigate to the directory **/setupScripts** it contains all the batch scripts that will help us in managing our code easily. **All scripts must be excuted from this directory.**
+5. First execute **replace_server_properties.bat** this will replace the server properties for all the tomcats that are required. It will ask for 2 user inputs
    1. The number of servers in the setup (2).
    2. The path where all the tomcat servers are.
       ![image](https://github.com/user-attachments/assets/4915f251-ef5c-42d7-b8cb-aa583185ed34)
-5. Now let's first execute the script **compile.bat**. It will ask for 2 user inputs
+6. Now let's first execute the script **compile.bat**. It will ask for 2 user inputs
    1. The number of servers in the setup (2).
    2. The path where all the tomcat servers are.
    ![image](https://github.com/user-attachments/assets/a3f0f185-4fc6-49ec-9395-bc3de92fde34)
    All our code has been compiled and moved to the corresponding server for deployment
-6. We have to start the servers with the script, **startup.bat**.  It will ask for 2 user inputs
+7. We have to start the servers with the script, **startup.bat**.  It will ask for 2 user inputs
    1. The number of servers in the setup (2).
    2. The path where all the tomcat servers are.
    Lets verify whether three servers are actually running or not using the netstat command
@@ -67,14 +69,14 @@ The top level directories and what they contain are listed below
    1. On ports 9000 and 9001 our application servers, 'server1' and 'server2' are listening.
    2. On port 9999 our proxy server is listening. Anyone who wants to access our application will be interacting with server listening on port 9999.
    3. These port configurations are in the **/tomcatConfiguration** directory and should not be changed because our code and test plans will also have to be changed for the same.
-7. Verify by pasting this link in your browser (do this atleast 4-5 times, you will see the request has been handled by our application servers)
+8. Verify by pasting this link in your browser (do this atleast 4-5 times, you will see the request has been handled by our application servers)
    ```
    http://localhost:9999/proxy/testing/test
    ```
    ![image](https://github.com/user-attachments/assets/766ab810-64f8-437e-89cd-57be2c3a1cc1)
    ![image](https://github.com/user-attachments/assets/1fa66974-6aea-4cbd-8a6f-0f8ed82c39b3)
    The code written for both the application servers server1 and server2 is exactly the same only thing different is the response they have are just giving out their server id 1 or 2.
-8. Run the tests for jMeter.
+9. Run the tests for jMeter.
    1. Load the test plans into your jMeter installation test plans are in the directory **jMeterTestPlansAndResults/testPlans**
       Directory structure
       ![image](https://github.com/user-attachments/assets/c9a2fde4-d3c3-43bd-99db-2456ec88a246)
@@ -97,7 +99,7 @@ The top level directories and what they contain are listed below
    3. You can either manually stop the servers or can use the script **shutdown.bat**. It will be expecting 2 user inputs
       1. The number of servers in the setup (2).
       2. The path where all the tomcat servers are.
-9. Scenario where one application server goes down. As discussed in the earlier section a major reason of having sych a setup is to ensure our system is highly available.
+10. Scenario where one application server goes down. As discussed in the earlier section a major reason of having sych a setup is to ensure our system is highly available.
     1. Execute the script **one_server_goes_down.bat**.
     2. Run the tests in step 8, have added step by step screenshots in the **jMeterTestPlansAndResults/results/whenOneServerIsDown/** folder.
        1. Verify using the netstat command
@@ -107,7 +109,7 @@ The top level directories and what they contain are listed below
           ![image](https://github.com/user-attachments/assets/2ceb3b5b-8421-412d-9efc-5c73ae544551)
           Server 2 was the only available server so it handled all the traffic
           ![image](https://github.com/user-attachments/assets/deaa208a-cff3-4740-a16a-ddaa8c4c8bbb)
-10. Have added this section to show the importance of the synchronized block in our LoadBalancerImplementation class.
+11. Have added this section to show the importance of the synchronized block in our LoadBalancerImplementation class.
     1. Switch to the branch **synch-block-removed**
        ![image](https://github.com/user-attachments/assets/ddad243c-36b0-498e-96cf-34db7897745e)
     2. Repeat steps 5 to compile the code if your servers are already running then they will automatically detect any classes change and will redeploy all the servlets. If not then simply repeat step 6.
